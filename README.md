@@ -12,3 +12,5 @@ Tady to je dobře vyřešené za pomocí Node-RED
 https://www.youtube.com/watch?v=nUgfFMaaipk&ab_channel=BnBeClub
 Využití Mongoose OS a posílání na MQTT server
 https://www.youtube.com/watch?v=ImVK5cGVrpQ&ab_channel=bitluni
+
+https://www.makeuseof.com/tag/wifi-connected-button-esp8266-tutorial/
