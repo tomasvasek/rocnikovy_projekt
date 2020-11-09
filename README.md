@@ -8,6 +8,8 @@ Rozpoznání několika druhů stisknutí
 
 Součástky - ESP8266, talčítko, baterie, krabička ...
 
+Potřebuji dokoupit 1 x 220 Ohm resistor
+
 Tady to je dobře vyřešené za pomocí Node-RED
 https://www.youtube.com/watch?v=nUgfFMaaipk&ab_channel=BnBeClub
 Využití Mongoose OS a posílání na MQTT server
