@@ -1,25 +1,50 @@
+/*********
+  
+*********/
 #include <Arduino.h>
-#include <ESP8266WiFi.h>
-#include <IFTTTWebhook.h>
+ 
+#define timeSeconds 10
+ 
+// Set GPIOs for LED and PIR Motion Sensor
+const int led = 12;
+const int motionSensor = 5;
+ 
+// Timer: Auxiliary variables
+unsigned long now = millis();
+unsigned long lastTrigger = 0;
+boolean startTimer = false;
 
-#define ledPin 5 
-#define wakePin 16
-#define ssid "YOUR_WIFI_SSID"
-#define password "YOUR_WIFI_PASSWORD"
-#define IFTTT_API_KEY "IFTTT_KEY_GOES_HERE"
-#define IFTTT_EVENT_NAME "IFTTT_EVENT_NAME_HERE"
-
-void setup() {
-    Serial.begin(115200);
-  while(!Serial) { 
-  }
-  Serial.println(" ");// print an empty line before and after Button Press  	
-  Serial.println("Button Pressed");
-  Serial.println(" TEST ");// print an empty line  
-  ESP.deepSleep(wakePin); 
+ 
+// Checks if motion was detected, sets LED HIGH and starts a timer
+ICACHE_RAM_ATTR void detectsMovement() {
+  Serial.println("MOTION DETECTED!!!");
+  digitalWrite(led, HIGH);
+  startTimer = true;
+  lastTrigger = millis();
 }
-
+ 
+void setup() {
+  // Serial port for debugging purposes
+  Serial.begin(115200);
+   
+  // PIR Motion Sensor mode INPUT_PULLUP
+  pinMode(motionSensor, INPUT_PULLUP);
+  // Set motionSensor pin as interrupt, assign interrupt function and set RISING mode
+  attachInterrupt(digitalPinToInterrupt(motionSensor), detectsMovement, RISING);
+ 
+  // Set LED to LOW
+  pinMode(led, OUTPUT);
+  digitalWrite(led, LOW);
+    Serial.println("Motion started ...");
+}
+ 
 void loop() {
-  //if deep sleep is working, this code will never run.
-  Serial.println("This shouldn't get printed");
+  // Current time
+  now = millis();
+  // Turn off the LED after the number of seconds defined in the timeSeconds variable
+  if(startTimer && (now - lastTrigger > (timeSeconds*1000))) {
+    Serial.println("Motion stopped...");
+    digitalWrite(led, LOW);
+    startTimer = false;
+  }
 }
