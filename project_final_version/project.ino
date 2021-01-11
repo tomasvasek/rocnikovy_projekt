@@ -4,11 +4,12 @@
 #define wakePin 16
 #define ssid "vaskovi2_home"
 #define password "VaSkOvI654321"
-#define IFTTT_API_KEY "bVC7mV4gdOBCnChEDjXz7V"
-#define IFTTT_EVENT_NAME "button"
+#define IFTTT_API_KEY "0i2y5jhIgd7P3S2YjAg53SEZE_uAKCqt5MdjSEY8Kz"
+#define IFTTT_EVENT_NAME "facebook_post"
 
 void setup() {
-  Serial.begin(9600);
+  Serial.println(" ");
+  Serial.begin(1200);
   while (!Serial) {
   }
   Serial.println(" ");
@@ -31,14 +32,14 @@ void setup() {
 
 void connectToWifi() {
   Serial.println(" ");
-  Serial.print("Connecting to: "); 
+  Serial.print("Připojování k: "); 
   Serial.print(ssid);
   WiFi.begin(ssid, password);
   Serial.println(" ");
   Serial.print("Pokus o připojení: ");
-  //10 sekund se pokouší o připojené
+  //10 sekund se pokouší o připojení
   int i = 10;
-  while (WiFi.status() != WL_CONNECTED && i >= 0) {
+  while (WiFi.status() != WL_CONNECTED && i >= 0) { //dokud se nepřipojí k Wi-Fi, odečítá se od i 1 každou sekundu a vypíše se to společně s čárkou
     delay(1000);
     Serial.print(i);
     Serial.print(", ");
@@ -46,9 +47,9 @@ void connectToWifi() {
   }
   Serial.println(" ");
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.print("Connected.");
+    Serial.print("Připojeno.");
     Serial.println(" ");
-    Serial.print("NodeMCU ip address: ");
+    Serial.print("NodeMCU ip addresa je: ");
     Serial.println(WiFi.localIP());
   }
   else {
@@ -57,5 +58,5 @@ void connectToWifi() {
 } 
 
 void loop() {
-  Serial.println("This shouldn't get printed");
+  Serial.println("Tohle by se nemělo vypsat, pokud funguje DeeepSleep");
 }
